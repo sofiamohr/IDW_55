@@ -8,250 +8,55 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../styles/global.css" />
-    <link rel="stylesheet" href="../../styles/admin_dashboard.css" />
+    <link rel="stylesheet" href="../../../styles/global.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
     />
   </head>
   <body>
-    <header>
-      <div class="header-content-container" id="headerContentContainer">
-        <div>
-          <a href="../../index.html">
-            <img src="../../assets/logos/logoHeader.png" id="logoHeader" />
-          </a>
-        </div>
-
-        <nav id="mainNavMenu">
-          <ul>
-            <li class="menu-element">
-              <a href="#" class="nav-link">Médicos</a>
-            </li>
-            <li class="menu-element">
-              <a href="#" class="nav-link">Reservas</a>
-            </li>
-            <li class="menu-element">
-              <a href="#" class="nav-link">Especialidades</a>
-            </li>
-            <li class="menu-element">
-              <a href="#" class="nav-link">Obras Sociales</a>
-            </li>
-            <li class="menu-element">
-              <a href="#" class="nav-link">Turnos</a>
-            </li>
-          </ul>
-        </nav>
-        <div class="d-flex align-items-center gap-3">
-          <a href="../login/login.html">
-            <button id="logoutBtn" class="btn btn-light btn-sm">
-              <i class="bi bi-box-arrow-right"></i>
-            </button>
-          </a>
-          <div class="burger-button-container">
-            <button id="burgerButton">
-              <svg
-                id="burgerIcon"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect y="4" width="24" height="2" fill="#ffffff" rx="1"></rect>
-                <rect y="11" width="24" height="2" fill="#ffffff" rx="1"></rect>
-                <rect y="18" width="24" height="2" fill="#ffffff" rx="1"></rect>
-              </svg>
-              <svg
-                id="closeIcon"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                class="hidden"
-              >
-                <line
-                  x1="4"
-                  y1="4"
-                  x2="20"
-                  y2="20"
-                  stroke="#ffffff"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-                <line
-                  x1="20"
-                  y1="4"
-                  x2="4"
-                  y2="20"
-                  stroke="#ffffff"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
     <div id="backdrop" class="hidden"></div>
-
-    <div class="main-content container-fluid py-4">
-      <div class="row mb-4">
-        <div class="col-12">
-          <div
-            class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4"
+    <section>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="main_menu.html">Mi Clínica</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
-            <h2 class="dashboardAdminTitle mb-3 mb-md-0">
-              Panel de Administración - Medicos
-            </h2>
-            <div class="d-flex gap-2">
-              <button id="btnNuevo" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Nuevo Médico
-              </button>
-              <div class="input-group" style="width: 250px">
-                <input
-                  type="text"
-                  id="searchInput"
-                  class="form-control"
-                  placeholder="Buscar..."
-                />
-                <button class="btn btn-outline-secondary" type="button">
-                  <i class="bi bi-search"></i>
-                </button>
-              </div>
-            </div>
-            <div>
-              <nav>
-                <li key='menuEspecialidades'>
-                  <button>
-                    Especialidades
-                  </button>
-                </li>
-                <li key='menuObrasSociales'><button>Obras Sociales</button></li>
-                <li key='menuMedicos'><button>Médicos</button></li>
-                <li key='menuTurnos'><button>Turnos</button></li>
-                <li key='menuReservas'><button>Reservas</button></li>
-
-              </nav>
-            </div>
-          </div>
-
-          <div class="card shadow-sm">
-            <div class="card-body p-0">
-              <div class="table-responsive">
-                <table class="table table-striped table-hover mb-0">
-                  <thead class="table-light">
-                    <tr>
-                      <th>Apellidos</th>
-                      <th>Nombres</th>
-                      <th>DNI</th>
-                      <th>Teléfono</th>
-                      <th>Especialidad</th>
-                      <th>Matrícula</th>
-                      <th class="text-center">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaMedicos"></tbody>
-                </table>
-              </div>
-            </div>
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="doctors_menu.html">Doctores</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="health_insurances_menu.html"
+                  >Obras sociales</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="specialties_menu.html"
+                  >Especialidades</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="appointments_menu.html">Turnos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="reservations_menu.html">Reservas</a>
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div
-      class="modal fade"
-      id="modalMedico"
-      tabindex="-1"
-      aria-labelledby="modalTitle"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header bg-primary text-white">
-            <h5 class="modal-title" id="modalTitle">Nuevo Médico</h5>
-            <button
-              type="button"
-              class="btn-close btn-close-white"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <input type="hidden" id="medicoId" />
-            <div class="mb-3">
-              <label for="apellidos" class="form-label">Apellidos</label>
-              <input
-                type="text"
-                class="form-control"
-                id="apellidos"
-                placeholder="Apellidos"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="nombres" class="form-label">Nombres</label>
-              <input
-                type="text"
-                class="form-control"
-                id="nombres"
-                placeholder="Nombres"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="dni" class="form-label">DNI</label>
-              <input
-                type="text"
-                class="form-control"
-                id="dni"
-                placeholder="DNI"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="telefono" class="form-label">Teléfono</label>
-              <input
-                type="text"
-                class="form-control"
-                id="telefono"
-                placeholder="Teléfono"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="especialidad" class="form-label">Especialidad</label>
-              <input
-                type="text"
-                class="form-control"
-                id="especialidad"
-                placeholder="Especialidad"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="matricula" class="form-label">Matrícula</label>
-              <input
-                type="text"
-                class="form-control"
-                id="matricula"
-                placeholder="Matrícula"
-              />
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Cancelar
-            </button>
-            <button type="button" class="btn btn-primary" id="guardarMedico">
-              Guardar
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
+      </nav>
+    </section>
     <footer>
       <div class="copyright">
         <p>© MedicalIDW - Clínica Médica</p>
@@ -503,4 +308,3 @@
     <script src="../../scripts/burgerMenu.js"></script>
   </body>
 </html>
-

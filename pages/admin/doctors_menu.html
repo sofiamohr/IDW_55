@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Administración - MedicalIDW</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="../../../styles/global.css" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <section>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="main_menu.html">Mi Clínica</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="doctors_menu.html">Doctores</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="health_insurances_menu.html"
+                  >Obras sociales</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="specialties_menu.html"
+                  >Especialidades</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="appointments_menu.html">Turnos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="reservations_menu.html">Reservas</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </section>
+
+    <!-- Contenido principal -->
+    <main class="container my-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="mb-0">Gestión de Médicos</h2>
+            <button id="btnNuevo" class="btn btn-success">
+              <i class="bi bi-plus-circle"></i> Nuevo Médico
+            </button>
+          </div>
+
+          <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2"
+          >
+            <input
+              id="searchInput"
+              type="text"
+              class="form-control"
+              placeholder="Buscar por nombre, apellido o matrícula..."
+            />
+
+            <!-- Botones de vista (solo visible en pantallas md o mayores) -->
+            <div
+              class="btn-group d-none d-md-flex"
+              role="group"
+              aria-label="Vista"
+            >
+              <button id="btnVistaTabla" class="btn btn-outline-primary active">
+                <i class="bi bi-table"></i> Tabla
+              </button>
+              <button id="btnVistaTarjetas" class="btn btn-outline-primary">
+                <i class="bi bi-grid-3x3-gap"></i> Tarjetas
+              </button>
+            </div>
+          </div>
+
+          <!-- Tabla de médicos -->
+          <div id="tablaContainer" class="table-responsive">
+            <table class="table table-striped align-middle">
+              <thead class="table-primary">
+                <tr>
+                  <th>Apellido</th>
+                  <th>Nombre</th>
+                  <th>Matrícula</th>
+                  <th>Teléfono</th>
+                  <th>Especialidad</th>
+                  <th>Honorario</th>
+                  <th class="text-center">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tablaMedicos">
+                <tr>
+                  <td colspan="7" class="text-center text-muted py-4">
+                    Cargando médicos...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Contenedor para tarjetas -->
+          <div
+            id="cardContainer"
+            class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 d-none"
+          ></div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="text-center mt-4 py-3 bg-light border-top">
+      <p class="mb-0">© MedicalIDW - Clínica Médica</p>
+      <p class="text-muted small mb-0">Introducción al Desarrollo Web - 2025</p>
+    </footer>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="modalMedico"
+      tabindex="-1"
+      aria-labelledby="modalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 id="modalTitle" class="modal-title">Nuevo Médico</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="apellidos" class="form-label">Apellidos *</label>
+                <input id="apellidos" type="text" class="form-control" />
+              </div>
+              <div class="col-md-6">
+                <label for="nombres" class="form-label">Nombres *</label>
+                <input id="nombres" type="text" class="form-control" />
+              </div>
+              <div class="col-md-6">
+                <label for="matricula" class="form-label">Matrícula *</label>
+                <input id="matricula" type="number" class="form-control" />
+              </div>
+              <div class="col-md-6">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input id="telefono" type="text" class="form-control" />
+              </div>
+              <div class="col-md-6">
+                <label for="dni" class="form-label">Honorario *</label>
+                <input id="dni" type="number" class="form-control" />
+              </div>
+              <div class="col-md-6">
+                <label for="especialidad" class="form-label"
+                  >Especialidad</label
+                >
+                <input id="especialidad" type="text" class="form-control" />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button id="guardarMedico" type="button" class="btn btn-primary">
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const API_URL = "http://localhost:3000/api/doctors";
+        const tablaBody = document.getElementById("tablaMedicos");
+        const cardContainer = document.getElementById("cardContainer");
+        const modal = new bootstrap.Modal(
+          document.getElementById("modalMedico"),
+        );
+        const searchInput = document.getElementById("searchInput");
+        const btnNuevo = document.getElementById("btnNuevo");
+        const guardarBtn = document.getElementById("guardarMedico");
+        const btnVistaTabla = document.getElementById("btnVistaTabla");
+        const btnVistaTarjetas = document.getElementById("btnVistaTarjetas");
+        const tablaContainer = document.getElementById("tablaContainer");
+
+        let doctores = [];
+        let doctorEditando = null;
+        let vista = "tabla"; // por defecto
+
+        async function fetchDoctores() {
+          const res = await fetch(API_URL);
+          doctores = await res.json();
+          renderDoctores();
+        }
+
+        function renderDoctores(filtro = "") {
+          const filtrados = doctores.filter(
+            (d) =>
+              d.firstName.toLowerCase().includes(filtro.toLowerCase()) ||
+              d.lastName.toLowerCase().includes(filtro.toLowerCase()) ||
+              String(d.licenseNumber).includes(filtro),
+          );
+
+          if (window.innerWidth < 768) {
+            vista = "tarjetas";
+          }
+
+          if (vista === "tabla") {
+            renderTable(filtrados);
+            tablaContainer.classList.remove("d-none");
+            cardContainer.classList.add("d-none");
+          } else {
+            renderCards(filtrados);
+            tablaContainer.classList.add("d-none");
+            cardContainer.classList.remove("d-none");
+          }
+        }
+
+        function renderTable(lista) {
+          tablaBody.innerHTML = lista.length
+            ? lista
+                .map(
+                  (d) => `
+              <tr data-id="${d._id}">
+                <td>${d.lastName}</td>
+                <td>${d.firstName}</td>
+                <td>${d.licenseNumber}</td>
+                <td>${d.phone || "-"}</td>
+                <td>${d.description || "-"}</td>
+                <td>${d.consultationFee || "-"}</td>
+                <td class="text-center">
+                  <div class="btn-group btn-group-sm">
+                    <button class="btn btn-outline-primary editar-btn"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-outline-danger eliminar-btn"><i class="bi bi-trash"></i></button>
+                  </div>
+                </td>
+              </tr>`,
+                )
+                .join("")
+            : `<tr><td colspan="7" class="text-center text-muted py-4">No se encontraron médicos</td></tr>`;
+        }
+
+        function renderCards(lista) {
+          cardContainer.innerHTML = lista.length
+            ? lista
+                .map(
+                  (d) => `
+            <div class="col">
+              <div class="card h-100 shadow-sm">
+                <img src="${
+                  d.image
+                    ? `data:image/jpeg;base64,${d.image}`
+                    : "https://via.placeholder.com/400x200?text=Médico"
+                }" class="card-img-top" alt="doctor">
+                <div class="card-body">
+                  <h5 class="card-title">${d.firstName} ${d.lastName}</h5>
+                  <p class="card-text mb-1 text-muted">${
+                    d.description || "Sin descripción"
+                  }</p>
+                  <p class="card-text small"><i class="bi bi-telephone"></i> ${
+                    d.phone || "-"
+                  }</p>
+                  <p class="fw-bold mb-2">Honorario: $${d.consultationFee}</p>
+                  <div class="d-flex justify-content-end gap-2">
+                    <button class="btn btn-sm btn-outline-primary editar-btn" data-id="${
+                      d._id
+                    }"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger eliminar-btn" data-id="${
+                      d._id
+                    }"><i class="bi bi-trash"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>`,
+                )
+                .join("")
+            : `<div class="text-center text-muted py-4">No se encontraron médicos</div>`;
+        }
+
+        searchInput.addEventListener("input", (e) =>
+          renderDoctores(e.target.value),
+        );
+
+        btnVistaTabla.addEventListener("click", () => {
+          vista = "tabla";
+          btnVistaTabla.classList.add("active");
+          btnVistaTarjetas.classList.remove("active");
+          renderDoctores(searchInput.value);
+        });
+
+        btnVistaTarjetas.addEventListener("click", () => {
+          vista = "tarjetas";
+          btnVistaTarjetas.classList.add("active");
+          btnVistaTabla.classList.remove("active");
+          renderDoctores(searchInput.value);
+        });
+
+        window.addEventListener("resize", () =>
+          renderDoctores(searchInput.value),
+        );
+
+        await fetchDoctores();
+      });
+    </script>
+
+    <!-- Enlace activo en navbar -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const currentPage = window.location.pathname.split("/").pop();
+        document.querySelectorAll(".navbar-nav .nav-link").forEach((link) => {
+          if (link.getAttribute("href") === currentPage) {
+            link.classList.add("active");
+            link.setAttribute("aria-current", "page");
+          }
+        });
+      });
+    </script>
+
+    <style>
+      .nav-link.active {
+        font-weight: 600;
+        text-decoration: underline;
+        color: #fff !important;
+      }
+    </style>
+  </body>
+</html>
