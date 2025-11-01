@@ -1,0 +1,217 @@
+<!-- Home Page -->
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contacto</title>
+    <link rel="stylesheet" href="../../styles/global.css" />
+    <link rel="stylesheet" href="../../styles/contacto.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="icon" href="../../assets/logos/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <header>
+      <div class="header-content-container" id="headerContentContainer">
+        <div>
+          <a href="../../index.html">
+            <img src="../../assets/logos/logoHeader.png" id="logoHeader" />
+          </a>
+        </div>
+
+        <nav id="mainNavMenu">
+          <ul>
+            <li class="menu-element">
+              <a href="../especialidades/especialidades.html">Especialidades</a>
+            </li>
+            <li class="menu-element">
+              <a href="contacto.html">Contacto</a>
+            </li>
+            <li class="menu-element">
+              <a href="../institucional/institucional.html">Institucional</a>
+            </li>
+            <li class="menu-element">
+              <a href="../profesionales_general/profesionales_general.html">Profesionales</a>
+            </li>
+            <li class="menu-element">
+              <a href="../login/login.html">
+              <i class="fas fa-user-md"></i> Iniciar Sesión 
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="burger-button-container">
+          <button id="burgerButton">
+            <!-- Burger SVG -->
+            <svg
+              id="burgerIcon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect y="4" width="24" height="2" fill="#ffffff" rx="1"></rect>
+              <rect y="11" width="24" height="2" fill="#ffffff" rx="1"></rect>
+              <rect y="18" width="24" height="2" fill="#ffffff" rx="1"></rect>
+            </svg>
+            <!-- X SVG -->
+            <svg
+              id="closeIcon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              class="hidden"
+            >
+              <line
+                x1="4"
+                y1="4"
+                x2="20"
+                y2="20"
+                stroke="#ffffff"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="20"
+                y1="4"
+                x2="4"
+                y2="20"
+                stroke="#ffffff"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div id="backdrop" class="hidden"></div>
+    <main>
+<!-- HERO -->    
+ <section class="hero">
+        <div class="hero-background-contacto"></div>
+        <div class="hero-content glass-black-1px">
+          <h2 class="hero-title"><b>Contacto</b></h2>
+          <p>Tu consulta es importante. Escríbenos y te responderemos en menos de 24 horas.</p>
+          <a href="../login/login.html" class="booking-link">RESERVAR TURNO</a>
+        </div>
+      </section>
+      <h3 class="titulo">Solicitá tu consulta ahora</h3>
+      
+<!-- SEPARADOR -->
+      <div class="separador"><hr></div>
+
+      <section class="contacto">
+        <h4 class="stitulo">Contacto</h4>
+        <hr class="linea" />
+        <p id="pcontacto">
+          Completá el siguiente formulario para contactarte con nosotros.
+          Responderemos a la brevedad.
+        </p>
+        <form>
+          <div class="form">
+            <label for="nombre">Nombre completo:</label>
+            <input type="text" class="imp" name="nombre" />
+          </div>
+          <div class="form">
+            <label for="mail">Correo electrónico:</label>
+            <input type="text" class="imp" name="mail" />
+          </div>
+          <div class="form">
+            <label for="asunto">Asunto:</label>
+            <input type="text" class="imp" name="asunto" />
+          </div>
+          <div class="form">
+            <label for="mensaje">Mensaje:</label>
+            <input type="text" id="mensaje" name="mensaje" />
+          </div>
+          <button type="submit" class="boton">Enviar</button>
+        </form>
+      </section>
+      <section class="contacto2">
+        <div id="textoc">
+         <h4 class="stitulo">Información de contacto</h4>
+          <div class="icont">
+            <svg class="icono" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" /></svg>
+           <p>Dirección: Av. Mendoza 2301, Rio Gallegos - Santa Cruz</p>
+          </div>
+          <div class="icont">
+            <svg class=" icono" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+            <p>Teléfono: 2978451223</p>
+          </div>
+          <div class="icont">
+            <svg class="icono" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+            <p>Correo Electronico: Medicalidw@gmail.com</p>
+          </div>
+          <div class="icont">
+            <svg class="icono" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-clock"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M12 7v5l3 3" /></svg>
+            <p>Horarios: Lunes a Sábados 08:00 a 20:00</p>
+          </div>
+        </div>
+        <div id="mapa">
+          <a href=https://www.google.com/maps/place/Mendoza,+Z9400+R%C3%ADo+Gallegos,+Santa+Cruz/@-51.6137756,-69.2285486,17z/data=!3m1!4b1!4m6!3m5!1s0xbdb6feac0a2c0b69:0xf2024f0963cd423c!8m2!3d-51.613779!4d-69.2259737!16s%2Fg%2F1tfr1p6p?entry=ttu&g_ep=EgoyMDI1MDkwMy4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+            <img src="../../assets/portadas/direccion.png">
+          </a>
+        </div>
+      </section>
+    </main>
+
+ <footer>
+      <div class="footer-content">
+        <div class="footer-logo-container">
+          <img src="../../assets/logos/logoCompletoSF.png">
+        </div>
+        <div class="footer-links">
+          <div>
+            <h3>Nuestras Especialidades</h3>
+              <nav>
+              <ul>
+                <li><a href="../especialidades/oftalmologia.html">Oftalmología</a></li>
+                <li><a href="../especialidades/cardiologia.html">Cardiología</a></li>
+                <li><a href="../especialidades/odontologia.html">Odontología</a></li>
+                <li><a href="../especialidades/traumatologia.html">Traumatología</a></li>
+                <li><a href="../especialidades/neurologia.html">Neurología</a></li>
+                <li><a href="../especialidades/ginecologia.html">Ginecología y Obstetricia</a></li>
+              </ul>
+           </nav>
+          </div>
+          <div>
+            <h3>Servicios Adicionales</h3>
+            <nav>
+              <ul>
+                <li><a href="#">Laboratorio</a></li>
+                <li><a href="#">Medicina Deportiva</a></li>
+                <li><a href="#">Telemedicina</a></li>
+                <li><a href="#">Rehabilitación Online</a></li>
+                <li><a href="#">Cirugia Robotica</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div>
+            <h3>Contacto</h3>
+            <nav>
+              <ul>
+                <li><p>Dirección: Av. Mendoza 2301, Rio Gallegos - Santa Cruz</p></li>
+                <li><p>Horarios: Lunes a Sábados 08:00 a 20:00</p></li>
+                <li><p>Whatsapp: 2978451223</p></li>
+                <li><p>Correo Electronico: Medicalidw@gmail.com</p></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>© MedicalIDW - Clínica Médica</p>
+        <p>Introducción al Desarrollo Web - 2025</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<script src="../../scripts/burgerMenu.js"></script>

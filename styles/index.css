@@ -1,0 +1,117 @@
+body {
+  background: url(../assets/backgrounds/fondo.jpg);
+}
+
+.specialties-section {
+  padding: 2em;
+
+}
+
+.specialties-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 1em;
+}
+
+.specialties-header h2 {
+  font-weight: bold;
+  font-size: 2em;
+  color: #005f99;
+}
+
+.specialties-header p {
+  font-size: 1em;
+  text-align: center;
+  max-width: 850px;
+}
+.specialties-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.specialties-card-container a {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.specialties-card-container a:hover {
+  transform: translateY(-8px);
+}
+
+.specialties-card-container article {
+  border: 1px solid #c0c0c0;
+  display: grid;
+  grid-template-rows: auto auto;
+  border-radius: 1em;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.07);
+}
+
+.specialties-card-container .title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+}
+
+.title-container h3 {
+  font-weight: bold;
+}
+.specialties-card-container .img-container {
+  height: 200px;
+  overflow: hidden;
+}
+.specialties-card-container > article img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* OBRAS SOCIALES */
+.obras {
+  text-align: center;
+  background: rgb(250, 248, 248);
+  padding: 1em;
+}
+.obras-img {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+.obras h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #005f99;
+}
+
+.obras img {
+  width: 140px;
+  height: auto;
+}
+
+.obras img:hover {
+  transform: scale(1.1);
+}
+
+@media (min-width: 768px) {
+  .specialties-header {
+    padding: 0 3em;
+  }
+  .specialties-card-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+
+  .obras-img {
+    display: flex;
+    gap: 0.5em;
+    padding: 1em;
+    overflow: hidden;
+  }
+}

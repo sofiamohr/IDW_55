@@ -1,0 +1,208 @@
+body {
+  background: url(../assets/backgrounds/fondo.jpg);
+}
+
+/* NO TOCAR ESTA CLASE */
+.hero-background-institucional {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/portadas/portadaInstitucional.jpg");
+  background-blend-mode: darken;
+  background-color: rgba(0, 0, 0, 0.4);
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-title {
+  color: white;
+  font-size: 2.8em;
+}
+.hero p {
+  font-size: 1.2rem;
+}
+
+/* MISION */
+
+.mision-texto {
+  flex: 1;
+}
+
+.mision-texto h2 {
+  font-size: 2rem;
+  color: #005f99;
+  margin-bottom: 15px;
+}
+
+.mision-img {
+  flex: 1;
+}
+
+.mision-img img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.mision {
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+  gap: 1em;
+}
+
+.separador hr {
+  width: 50%;
+  border: 2px solid #0077b6;
+  margin: auto;
+}
+
+/* CLINICAS */
+.clinicas {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.clinicas h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #005f99;
+  padding: 30px;
+  font-weight: bold;
+}
+
+.clinicas-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.clinica {
+  flex: 1;
+  min-width: 200px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.clinica:hover {
+  transform: translateY(-5px);
+}
+
+.clinica h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #010101;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.clinica img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.clinica ul {
+  margin-left: 20px;
+}
+
+.clinica h4 {
+  margin-top: 10px;
+  color: #000000;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.clinica li {
+  list-style: square;
+}
+
+.clinica-direccion,
+.clinica-horario {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 10px 0;
+}
+
+.clinica-direccion strong,
+.clinica-horario strong {
+  color: #0077b6;
+}
+
+.btn-vermas {
+  display: block;
+  width: fit-content;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  background: #0077b6;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-vermas:hover {
+  background: #005f8a;
+}
+
+/* OBRAS SOCIALES */
+.obras {
+  text-align: center;
+  background: rgb(250, 248, 248);
+  padding: 1em;
+}
+.obras-img {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+.obras h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #005f99;
+}
+
+.obras img {
+  width: 140px;
+  height: auto;
+}
+
+.obras img:hover {
+  transform: scale(1.1);
+}
+
+@media (min-width: 768px) {
+  .mision {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 20px;
+    gap: 40px;
+  }
+
+  .clinicas-grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .obras-img {
+    display: flex;
+    gap: 0.5em;
+    padding: 1em;
+    overflow: hidden;
+  }
+}

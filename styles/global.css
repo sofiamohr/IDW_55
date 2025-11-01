@@ -1,0 +1,352 @@
+/* <Reset básico> */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Inter", "Roboto", "Open Sans", Arial, sans-serif;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+li {
+  list-style: none;
+}
+/* </ Reset básico> */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+
+.header-content-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em 1em;
+  background: #4397ca;
+  margin: 0.5em 0.5em 0 0.5em;
+  border-radius: 0.5em;
+}
+
+.burger-button-container {
+  display: flex;
+}
+
+header nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: white;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  margin: 0 0.5em 0 0.5em;
+}
+
+header ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 1em;
+}
+
+#logoHeader {
+  border-bottom-left-radius: 0.5em;
+  border-top-left-radius: 0.5em;
+  width: 185px;
+}
+
+.menu-element {
+  background: #4397ca;
+  border-radius: 0.5em;
+  color: white;
+  padding: 0.5em;
+}
+
+#burgerButton {
+  padding: 1px;
+  border: none;
+  border-radius: 3px;
+  background: none;
+}
+
+#backdrop {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 80vh; /* Hero ocupa toda la pantalla */
+  overflow: hidden;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/portadas/portadaHomePage.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: white;
+  text-align: center;
+  z-index: 1;
+  gap: 1em;
+}
+
+.hero-logo {
+  max-width: 300px;
+}
+
+.hero-title {
+  color: black;
+  font-size: 2em;
+}
+.booking-link {
+  padding: 12px 30px;
+  background-color: #4397ca;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 0.5em;
+  transition: background-color 0.3s ease;
+}
+
+.booking-link:hover {
+  background-color: #005f8a;
+}
+
+/* FOOTER */
+footer {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1em;
+}
+
+.footer-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer-logo-container img {
+  width: 200px;
+  height: auto;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.footer-links h3 {
+  font-weight: bold;
+}
+.copyright {
+  border-top: 2px solid;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+/* <Media Query para pantallas a partir de 768px de ancho > */
+@media (min-width: 768px) {
+  header nav {
+    position: static;
+    left: 0;
+    right: 0;
+    top: 100%;
+    border: 0;
+    background: none;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  header ul {
+    display: flex;
+    flex-direction: inherit;
+    justify-content: space-between;
+    gap: 5em;
+    padding: 0;
+  }
+
+  .menu-element {
+    padding: 0;
+  }
+
+  .burger-button-container {
+    display: none;
+  }
+
+  .hero {
+    height: 100vh;
+  }
+
+  .hero-logo {
+    max-width: 500px;
+  }
+  footer {
+    gap: 3em;
+    padding-top: 3em;
+  }
+
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .footer-links {
+    flex-direction: row;
+    gap: 3em;
+  }
+
+  .footer-links h3 {
+    font-size: 1.2em;
+  }
+
+  .footer-links ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+
+  .copyright {
+    display: flex;
+    flex-direction: row;
+  }
+}
+/* </ Media Query para pantallas a partir de 768px de ancho > */
+
+/* <Clases Auxiliares> */
+
+
+/* Handle icons */
+.hidden {
+  display: none !important;
+}
+
+/* Header rounded corners */
+#headerContentContainer {
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+}
+#headerContentContainer.menu-open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.glass-white-1px {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+.glass-white-2px {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.glass-white-3px {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.glass-white-4px {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.glass-white-5px {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.glass-black-1px {
+  background: rgba(0, 0, 0, 0.27);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+/* </ Clases Auxiliares> */

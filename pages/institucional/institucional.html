@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Institucional</title>
+    <link rel="stylesheet" href="../../styles/global.css" />
+    <link rel="stylesheet" href="../../styles/institucional.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="icon" href="../../assets/logos/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <header>
+      <div class="header-content-container" id="headerContentContainer">
+
+        <div>
+          <a href="../../index.html">
+            <img src="../../assets/logos/logoHeader.png" id="logoHeader"/>
+          </a>
+        </div>
+
+        <nav id="mainNavMenu">
+          <ul>
+            <li class="menu-element">
+              <a href="../especialidades/especialidades.html"
+                >Especialidades</a
+              >
+            </li>
+            <li class="menu-element">
+              <a href="../contacto/contacto.html">Contacto</a>
+            </li>
+            <li class="menu-element">
+              <a href="institucional.html">Institucional</a>
+            </li>
+            <li class="menu-element">
+              <a href="../profesionales_general/profesionales_general.html">
+                Profesionales
+              </a>
+            </li>
+            <li class="menu-element">
+              <a href="../login/login.html">
+              <i class="fas fa-user-md"></i> Iniciar Sesión 
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="burger-button-container">
+          <button id="burgerButton">
+            <!-- Burger SVG -->
+            <svg
+              id="burgerIcon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect y="4" width="24" height="2" fill="#ffffff" rx="1"></rect>
+              <rect y="11" width="24" height="2" fill="#ffffff" rx="1"></rect>
+              <rect y="18" width="24" height="2" fill="#ffffff" rx="1"></rect>
+            </svg>
+            <!-- X SVG -->
+            <svg
+              id="closeIcon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              class="hidden"
+            >
+              <line
+                x1="4"
+                y1="4"
+                x2="20"
+                y2="20"
+                stroke="#ffffff"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="20"
+                y1="4"
+                x2="4"
+                y2="20"
+                stroke="#ffffff"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </header>
+    <!-- Backdrop para cuando se abre el menu en dispositivos móviles -->
+    <div id="backdrop" class="hidden"></div>
+
+ <main>
+      <section class="hero">
+        <div class="hero-background-institucional"></div>
+        <div class="hero-content glass-black-1px">
+          <h2 class="hero-title"><b>Institucional</b></h2>
+          <p>Conocé más sobre nuestra misión, clínicas y convenios médicos.</p>
+          <a href="../login/login.html" class="booking-link">RESERVAR TURNO</a>
+        </div>
+      </section>
+
+        <!-- Mision clinica -->
+       <section class="mision" id="about">
+         <div class="mision-texto">
+           <h2><b>Nuestra Misión</b></h2>
+           <p>
+           En <strong>MEDICALIDW</strong>, nuestra misión es mejorar la calidad de vida de las personas 
+           a través de una atención médica cercana, confiable y de excelencia. 
+           Apostamos a la innovación y al trato humano en cada consulta.
+           </p>
+           <br/>
+           <p>
+           Contamos con profesionales altamente capacitados y tecnología de vanguardia. 
+           Brindamos diagnósticos certeros, tratamientos efectivos y un acompañamiento integral, 
+           promoviendo inclusión y bienestar en cada etapa de la vida.
+           </p>
+         </div>
+         <div class="mision-img">
+           <img src="../../assets/edificio/areaQuirurgica.png" alt="Imagen sala quirurgica">
+         </div>
+      </section>
+
+      <!-- SEPARADOR -->
+      <div class="separador"><hr></div>
+
+      <!-- TARJETAS -->
+      <section class="clinicas">
+        <h2>Nuestras Clínicas</h2>
+        <div class="clinicas-grid">
+          <div class="clinica">
+            <h3>Clínica Norte</h3>
+
+            <img src="../../assets/edificio/livingClinica.png" alt="Clínica Norte">
+
+            <h4>Especialidades:</h4>
+
+            <ul>
+              <li>Pediatría</li>
+              <li>Cardiología</li>
+              <li>Dermatología</li>
+            </ul>
+
+            <p class="clinica-direccion"><strong>Dirección:</strong> Av. Mendoza 2301, Rio Gallegos</p>
+
+            <!-- Horario -->
+            <p class="clinica-horario">
+              <strong>Horarios:</strong> Lunes a Sabados 08:00 - 20:00
+            </p>
+
+            <a href="#" class="btn-vermas">Ver más</a>
+          </div>
+
+          <div class="clinica">
+            <h3>Clínica Sur</h3>
+
+            <img src="../../assets/edificio/areaOftalmologia.webp" alt="Clínica Sur">
+
+            <h4>Especialidades:</h4>
+
+            <ul>
+              <li>Oftalmología</li>
+              <li>Ginecología y Obstetricia</li>
+              <li>Radiología</li>
+            </ul>
+
+            <p class="clinica-direccion"><strong>Dirección:</strong> Av. Fretes 1011, Rio Gallegos</p>
+
+            <p class="clinica-horario">
+              <strong>Horarios:</strong> Lunes a Sabados 08:00 - 20:00
+            </p>
+
+            <a href="#" class="btn-vermas">Ver más</a>
+          </div>
+
+          <div class="clinica">
+            <h3>Clínica Oeste</h3>
+
+            <img src="../../assets/edificio/medicinaDeportiva.png" alt="Clínica Oeste">
+
+            <h4>Especialidades:</h4>
+
+            <ul>
+              <li>Neurología</li>
+              <li>Oncología</li>
+              <li>Rehabilitación</li>
+            </ul>
+
+            <p class="clinica-direccion"><strong>Dirección:</strong> Av. Libertad 123, Calafate</p>
+
+            <p class="clinica-horario">
+              <strong>Horarios:</strong> Lunes a Viernes 07:00 - 19:00
+            </p>
+
+            <a href="#" class="btn-vermas">Ver más</a>
+          </div>
+      </section>
+
+      <!-- OBRAS SOCIALES -->
+      <section class="obras">
+        <h2>Obras Sociales</h2>
+
+        <p>
+          En <strong>MEDICALIDW</strong> tenemos convenios con diversas obras sociales para facilitar tu acceso a nuestros servicios.
+        </p>
+
+        <div class="obras-img">
+          <img src="../../assets/obrasSociales/1.png" alt="OSPE">
+          <img src="../../assets/obrasSociales/2.png" alt="SANCOR">
+          <img src="../../assets/obrasSociales/3.png" alt="AVALIAN">
+          <img src="../../assets/obrasSociales/4.png" alt="MEDICUS">
+          <img src="../../assets/obrasSociales/5.png" alt="GALENO">
+          <img src="../../assets/obrasSociales/6.png" alt="PAMI">
+          <img src="../../assets/obrasSociales/7.png" alt="SWISS MEDICAL">
+          <img src="../../assets/obrasSociales/8.png" alt="MEDIFE">
+          <img src="../../assets/obrasSociales/9.png" alt="OSDE">
+        </div>
+      </section>
+    </main>
+
+ <footer>
+      <div class="footer-content">
+        <div class="footer-logo-container">
+          <img src="../../assets/logos/logoCompletoSF.png">
+        </div>
+        <div class="footer-links">
+          <div>
+            <h3>Nuestras Especialidades</h3>
+              <nav>
+              <ul>
+                <li><a href="../especialidades/oftalmologia.html">Oftalmología</a></li>
+                <li><a href="../especialidades/cardiologia.html">Cardiología</a></li>
+                <li><a href="../especialidades/odontologia.html">Odontología</a></li>
+                <li><a href="../especialidades/traumatologia.html">Traumatología</a></li>
+                <li><a href="../especialidades/neurologia.html">Neurología</a></li>
+                <li><a href="../especialidades/ginecologia.html">Ginecología y Obstetricia</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div>
+            <h3>Servicios Adicionales</h3>
+            <nav>
+              <ul>
+                <li><a href="#">Laboratorio</a></li>
+                <li><a href="#">Medicina Deportiva</a></li>
+                <li><a href="#">Telemedicina</a></li>
+                <li><a href="#">Rehabilitación Online</a></li>
+                <li><a href="#">Cirugia Robotica</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div>
+            <h3>Contacto</h3>
+            <nav>
+              <ul>
+                <li><p>Dirección: Av. Mendoza 2301, Rio Gallegos - Santa Cruz</p></li>
+                <li><p>Horarios: Lunes a Sábados 08:00 a 20:00</p></li>
+                <li><p>Whatsapp: 2978451223</p></li>
+                <li><p>Correo Electronico: Medicalidw@gmail.com</p></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>© MedicalIDW - Clínica Médica</p>
+        <p>Introducción al Desarrollo Web - 2025</p>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+<script src="../../scripts/burgerMenu.js"></script>

@@ -1,0 +1,40 @@
+body {
+  background: url(../assets/backgrounds/fondo.jpg);
+}
+/* NO TOCAR */
+.hero-background-profesionales-general {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/portadas/portadaProfesionalesGeneral.jpg"); 
+  background-blend-mode: darken;
+  background-color: rgba(0, 0, 0, 0.4);
+  background-size: cover;
+  background-position: center;
+}
+/* NO TOCAR */
+.hero-title {
+  color: white;
+  font-size: 2.8em;
+}
+/* NO TOCAR */
+.hero p {
+  font-size: 1.2rem;
+}
+
+/* Ingresar estilos a partir de esta linea */
+
+.card{
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.card-title{
+  font-size: 18px;
+  font-weight: 500;
+}
+
+
+@media (min-width: 768px) {
+
+}

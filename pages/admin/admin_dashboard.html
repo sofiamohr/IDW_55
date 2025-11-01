@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Administración - MedicalIDW</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../styles/global.css" />
+    <link rel="stylesheet" href="../../styles/admin_dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="header-content-container" id="headerContentContainer">
+        <div>
+          <a href="../../index.html">
+            <img src="../../assets/logos/logoHeader.png" id="logoHeader" />
+          </a>
+        </div>
+
+        <nav id="mainNavMenu">
+          <ul>
+            <li class="menu-element">
+              <a href="#" class="nav-link">Médicos</a>
+            </li>
+            <li class="menu-element">
+              <a href="#" class="nav-link">Reservas</a>
+            </li>
+            <li class="menu-element">
+              <a href="#" class="nav-link">Especialidades</a>
+            </li>
+            <li class="menu-element">
+              <a href="#" class="nav-link">Obras Sociales</a>
+            </li>
+            <li class="menu-element">
+              <a href="#" class="nav-link">Turnos</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="d-flex align-items-center gap-3">
+          <a href="../login/login.html">
+            <button id="logoutBtn" class="btn btn-light btn-sm">
+              <i class="bi bi-box-arrow-right"></i>
+            </button>
+          </a>
+          <div class="burger-button-container">
+            <button id="burgerButton">
+              <svg
+                id="burgerIcon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect y="4" width="24" height="2" fill="#ffffff" rx="1"></rect>
+                <rect y="11" width="24" height="2" fill="#ffffff" rx="1"></rect>
+                <rect y="18" width="24" height="2" fill="#ffffff" rx="1"></rect>
+              </svg>
+              <svg
+                id="closeIcon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                class="hidden"
+              >
+                <line
+                  x1="4"
+                  y1="4"
+                  x2="20"
+                  y2="20"
+                  stroke="#ffffff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <line
+                  x1="20"
+                  y1="4"
+                  x2="4"
+                  y2="20"
+                  stroke="#ffffff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div id="backdrop" class="hidden"></div>
+
+    <div class="main-content container-fluid py-4">
+      <div class="row mb-4">
+        <div class="col-12">
+          <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4"
+          >
+            <h2 class="dashboardAdminTitle mb-3 mb-md-0">
+              Panel de Administración - Medicos
+            </h2>
+            <div class="d-flex gap-2">
+              <button id="btnNuevo" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Nuevo Médico
+              </button>
+              <div class="input-group" style="width: 250px">
+                <input
+                  type="text"
+                  id="searchInput"
+                  class="form-control"
+                  placeholder="Buscar..."
+                />
+                <button class="btn btn-outline-secondary" type="button">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
+            <div>
+              <nav>
+                <li key='menuEspecialidades'>
+                  <button>
+                    Especialidades
+                  </button>
+                </li>
+                <li key='menuObrasSociales'><button>Obras Sociales</button></li>
+                <li key='menuMedicos'><button>Médicos</button></li>
+                <li key='menuTurnos'><button>Turnos</button></li>
+                <li key='menuReservas'><button>Reservas</button></li>
+
+              </nav>
+            </div>
+          </div>
+
+          <div class="card shadow-sm">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-striped table-hover mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Apellidos</th>
+                      <th>Nombres</th>
+                      <th>DNI</th>
+                      <th>Teléfono</th>
+                      <th>Especialidad</th>
+                      <th>Matrícula</th>
+                      <th class="text-center">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tablaMedicos"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalMedico"
+      tabindex="-1"
+      aria-labelledby="modalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="modalTitle">Nuevo Médico</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="medicoId" />
+            <div class="mb-3">
+              <label for="apellidos" class="form-label">Apellidos</label>
+              <input
+                type="text"
+                class="form-control"
+                id="apellidos"
+                placeholder="Apellidos"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="nombres" class="form-label">Nombres</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nombres"
+                placeholder="Nombres"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="dni" class="form-label">DNI</label>
+              <input
+                type="text"
+                class="form-control"
+                id="dni"
+                placeholder="DNI"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="telefono" class="form-label">Teléfono</label>
+              <input
+                type="text"
+                class="form-control"
+                id="telefono"
+                placeholder="Teléfono"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="especialidad" class="form-label">Especialidad</label>
+              <input
+                type="text"
+                class="form-control"
+                id="especialidad"
+                placeholder="Especialidad"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="matricula" class="form-label">Matrícula</label>
+              <input
+                type="text"
+                class="form-control"
+                id="matricula"
+                placeholder="Matrícula"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button type="button" class="btn btn-primary" id="guardarMedico">
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="copyright">
+        <p>© MedicalIDW - Clínica Médica</p>
+        <p>Introducción al Desarrollo Web - 2025</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="../../scripts/medicos.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const API_URL = "http://localhost:3000/api/doctors";
+        const tablaBody = document.getElementById("tablaMedicos");
+        const modalElement = document.getElementById("modalMedico");
+        const modal = new bootstrap.Modal(modalElement);
+        const searchInput = document.getElementById("searchInput");
+        const btnNuevo = document.getElementById("btnNuevo");
+        const guardarBtn = document.getElementById("guardarMedico");
+        const mainContainer = document.querySelector(
+          ".card.shadow-sm .card-body",
+        );
+
+        let doctores = [];
+        let doctorEditando = null;
+
+        // ========== API HANDLERS ==========
+        async function fetchDoctores() {
+          try {
+            const res = await fetch(API_URL);
+            if (!res.ok) throw new Error("Error al obtener los doctores");
+            doctores = await res.json();
+            renderDoctores();
+          } catch (err) {
+            console.error(err);
+            tablaBody.innerHTML = `<tr><td colspan="7" class="text-center text-danger py-4">Error al cargar los datos</td></tr>`;
+          }
+        }
+
+        async function crearDoctor(doctor) {
+          try {
+            const res = await fetch(API_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(doctor),
+            });
+            if (!res.ok) throw new Error("Error al crear el doctor");
+            await fetchDoctores();
+          } catch (err) {
+            alert(err.message);
+          }
+        }
+
+        async function actualizarDoctor(doctor) {
+          try {
+            const res = await fetch(API_URL, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(doctor),
+            });
+            if (!res.ok) throw new Error("Error al actualizar el doctor");
+            await fetchDoctores();
+          } catch (err) {
+            alert(err.message);
+          }
+        }
+
+        async function eliminarDoctor(id) {
+          if (!confirm("¿Está seguro que desea eliminar este médico?")) return;
+          try {
+            const res = await fetch(API_URL, {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id }),
+            });
+            if (!res.ok) throw new Error("Error al eliminar el doctor");
+            await fetchDoctores();
+          } catch (err) {
+            alert(err.message);
+          }
+        }
+
+        // ========== RENDER ==========
+        function renderDoctores(filtro = "") {
+          const filtrados = doctores.filter(
+            (d) =>
+              d.firstName.toLowerCase().includes(filtro.toLowerCase()) ||
+              d.lastName.toLowerCase().includes(filtro.toLowerCase()) ||
+              String(d.licenseNumber).includes(filtro),
+          );
+
+          if (window.innerWidth < 768) {
+            renderCards(filtrados);
+          } else {
+            renderTable(filtrados);
+          }
+        }
+
+        function renderTable(lista) {
+          tablaBody.innerHTML = lista.length
+            ? lista
+                .map(
+                  (d) => `
+        <tr data-id="${d._id}">
+          <td>${d.lastName}</td>
+          <td>${d.firstName}</td>
+          <td>${d.licenseNumber}</td>
+          <td>${d.phone || "-"}</td>
+          <td>${d.specialty && d.specialty.length ? d.specialty.map((s) => s.name).join(", ") : "-"}</td>
+          <td>${d.consultationFee || "-"}</td>
+          <td class="text-center">
+            <div class="btn-group btn-group-sm" role="group">
+              <button class="btn btn-outline-primary editar-btn"><i class="bi bi-pencil"></i></button>
+              <button class="btn btn-outline-danger eliminar-btn"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+      `,
+                )
+                .join("")
+            : `<tr><td colspan="7" class="text-center text-muted py-4">No se encontraron médicos</td></tr>`;
+        }
+
+        function renderCards(lista) {
+          // Sustituimos la tabla por tarjetas responsivas
+          const contenedor = document.createElement("div");
+          contenedor.className = "row row-cols-1 g-3";
+          contenedor.innerHTML = lista.length
+            ? lista
+                .map(
+                  (d) => `
+        <div class="col">
+          <div class="card shadow-sm h-100">
+            <img src="${d.image ? `data:image/jpeg;base64,${d.image}` : "https://via.placeholder.com/400x200?text=Médico"}" class="card-img-top" alt="doctor">
+            <div class="card-body">
+              <h5 class="card-title">${d.firstName} ${d.lastName}</h5>
+              <p class="card-text mb-1">${d.description || "Sin descripción"}</p>
+              <p class="card-text text-muted small mb-1">
+                <i class="bi bi-telephone"></i> ${d.phone || "-"}
+              </p>
+              <p class="card-text text-muted small mb-1">
+                <i class="bi bi-envelope"></i> ${d.email || "-"}
+              </p>
+              <p class="card-text fw-bold mb-2">Honorario: $${d.consultationFee}</p>
+              <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-sm btn-outline-primary editar-btn" data-id="${d._id}"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-sm btn-outline-danger eliminar-btn" data-id="${d._id}"><i class="bi bi-trash"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+                )
+                .join("")
+            : `<div class="text-center text-muted py-4">No se encontraron médicos</div>`;
+          tablaBody.innerHTML = ""; // vaciar tabla
+          mainContainer.innerHTML = "";
+          mainContainer.appendChild(contenedor);
+        }
+
+        // ========== EVENTOS ==========
+        tablaBody.addEventListener("click", (e) => {
+          const btn = e.target.closest("button");
+          if (!btn) return;
+          const fila = btn.closest("tr");
+          const id = fila?.dataset.id || btn.dataset.id;
+          const doctor = doctores.find((d) => d._id === id);
+          if (btn.classList.contains("editar-btn")) abrirModalEditar(doctor);
+          if (btn.classList.contains("eliminar-btn")) eliminarDoctor(id);
+        });
+
+        btnNuevo.addEventListener("click", () => abrirModalNuevo());
+        searchInput.addEventListener("input", (e) =>
+          renderDoctores(e.target.value),
+        );
+        window.addEventListener("resize", () =>
+          renderDoctores(searchInput.value),
+        );
+
+        guardarBtn.addEventListener("click", async () => {
+          const nuevo = {
+            firstName: document.getElementById("nombres").value.trim(),
+            lastName: document.getElementById("apellidos").value.trim(),
+            licenseNumber: Number(
+              document.getElementById("matricula").value.trim(),
+            ),
+            phone: document.getElementById("telefono").value.trim(),
+            email: "",
+            specialty: [],
+            healthInsurances: [],
+            description: document.getElementById("especialidad").value.trim(),
+            consultationFee:
+              Number(document.getElementById("dni").value.trim()) || 0,
+            image: "",
+          };
+
+          if (
+            !nuevo.firstName ||
+            !nuevo.lastName ||
+            !nuevo.licenseNumber ||
+            !nuevo.consultationFee
+          ) {
+            alert("Complete todos los campos obligatorios");
+            return;
+          }
+
+          if (doctorEditando) {
+            await actualizarDoctor({ id: doctorEditando._id, ...nuevo });
+          } else {
+            await crearDoctor(nuevo);
+          }
+          modal.hide();
+        });
+
+        // ========== MODAL ==========
+        function abrirModalNuevo() {
+          doctorEditando = null;
+          document.getElementById("modalTitle").textContent = "Nuevo Médico";
+          [
+            "apellidos",
+            "nombres",
+            "dni",
+            "telefono",
+            "especialidad",
+            "matricula",
+          ].forEach((id) => (document.getElementById(id).value = ""));
+          modal.show();
+        }
+
+        function abrirModalEditar(doctor) {
+          doctorEditando = doctor;
+          document.getElementById("modalTitle").textContent = "Editar Médico";
+          document.getElementById("apellidos").value = doctor.lastName || "";
+          document.getElementById("nombres").value = doctor.firstName || "";
+          document.getElementById("dni").value = doctor.consultationFee || "";
+          document.getElementById("telefono").value = doctor.phone || "";
+          document.getElementById("especialidad").value =
+            doctor.description || "";
+          document.getElementById("matricula").value =
+            doctor.licenseNumber || "";
+          modal.show();
+        }
+
+        // Inicializar
+        await fetchDoctores();
+      });
+    </script>
+    <script src="../../scripts/burgerMenu.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,30 @@
+body {
+  background: url(../assets/backgrounds/fondo.jpg);
+}
+/* NO TOCAR */
+.hero-background-profesionales {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/portadas/portadaProfesionales.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+/* NO TOCAR */
+.hero-title {
+  color: #000000;
+  font-size: 2.8em;
+}   
+
+.hero-logo {
+  width: 300px;
+  margin-top: 0px;
+}
+
+/* Ingresar estilos a partir de esta linea */
+
+@media (min-width: 768px) {
+}

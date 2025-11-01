@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Obras Sociales</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="main_menu.html">Mi Clínica</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="doctors_menu.html">Doctores</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="health_insurances_menu.html"
+                  >Obras sociales</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="specialties_menu.html"
+                  >Especialidades</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="appointments_menu.html">Turnos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="reservations_menu.html">Reservas</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </section>
+
+    <div class="container py-4">
+      <header
+        class="d-flex justify-content-between align-items-center flex-wrap mb-4"
+      >
+        <h1 class="mb-2 mb-md-0">Obras Sociales</h1>
+        <div class="d-flex gap-2 flex-wrap">
+          <button class="btn btn-primary" id="btnNuevaObraSocial">
+            Nueva Obra Social
+          </button>
+          <button
+            class="btn btn-secondary d-none d-md-block"
+            id="btnToggleView"
+          >
+            Cambiar Vista
+          </button>
+        </div>
+      </header>
+
+      <!-- Grid -->
+      <div id="gridContainer" class="row row-cols-1 row-cols-md-3 g-3"></div>
+
+      <!-- Tabla -->
+      <div id="tableContainer" class="table-responsive d-none">
+        <table class="table table-striped table-bordered align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>Nombre</th>
+              <th>Descuento (%)</th>
+              <th>Imagen</th>
+              <th>ID</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="modalObraSocial"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="modalTitle">Nueva Obra Social</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="obraSocialId" />
+            <div class="mb-3">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombreObraSocial" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Descuento (%)</label>
+              <input
+                type="number"
+                class="form-control"
+                id="descuentoObraSocial"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Imagen (Base64)</label>
+              <input type="text" class="form-control" id="imagenObraSocial" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="guardarObraSocial"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const API_URL = "http://localhost:3000/api/healthinsurances";
+      const gridContainer = document.getElementById("gridContainer");
+      const tableContainer = document.getElementById("tableContainer");
+      const tableBody = document.getElementById("tableBody");
+      const btnNuevaObraSocial = document.getElementById("btnNuevaObraSocial");
+      const btnToggleView = document.getElementById("btnToggleView");
+      const guardarBtn = document.getElementById("guardarObraSocial");
+
+      let obras = [];
+      let obraEditando = null;
+      let gridView = true;
+
+      async function fetchObras() {
+        try {
+          const res = await fetch(API_URL);
+          if (!res.ok) throw new Error("Error al obtener obras sociales");
+          obras = await res.json();
+          renderObras();
+        } catch (err) {
+          gridContainer.innerHTML = `<div class="text-danger">No se pudieron cargar las obras sociales</div>`;
+          console.error(err);
+        }
+      }
+
+      function renderObras() {
+        if (window.innerWidth < 768) gridView = true;
+
+        if (gridView) {
+          tableContainer.classList.add("d-none");
+          gridContainer.classList.remove("d-none");
+          gridContainer.innerHTML = obras.length
+            ? obras
+                .map(
+                  (o) => `
+            <div class="col">
+              <div class="card h-100 shadow-sm">
+                <img src="${o.image ? `data:image/jpeg;base64,${o.image}` : "https://via.placeholder.com/400x200?text=Obra+Social"}" class="card-img-top" alt="${o.name}">
+                <div class="card-body">
+                  <h5 class="card-title">${o.name}</h5>
+                  <p class="mb-1">Descuento: ${o.discount || 0}%</p>
+                  <p class="text-muted small">ID: ${o._id}</p>
+                  <div class="d-flex justify-content-end gap-2 mt-2">
+                    <button class="btn btn-sm btn-outline-primary editar-btn" data-id="${o._id}">Editar</button>
+                    <button class="btn btn-sm btn-outline-danger eliminar-btn" data-id="${o._id}">Eliminar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `,
+                )
+                .join("")
+            : `<div class="text-muted">No hay obras sociales</div>`;
+        } else {
+          gridContainer.classList.add("d-none");
+          tableContainer.classList.remove("d-none");
+          tableBody.innerHTML = obras.length
+            ? obras
+                .map(
+                  (o) => `
+            <tr>
+              <td>${o.name}</td>
+              <td>${o.discount || 0}</td>
+              <td><img src="${o.image ? `data:image/jpeg;base64,${o.image}` : "https://via.placeholder.com/100x50"}" width="100" /></td>
+              <td>${o._id}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary editar-btn" data-id="${o._id}">Editar</button>
+                <button class="btn btn-sm btn-outline-danger eliminar-btn" data-id="${o._id}">Eliminar</button>
+              </td>
+            </tr>
+          `,
+                )
+                .join("")
+            : `<tr><td colspan="5" class="text-center text-muted">No hay obras sociales</td></tr>`;
+        }
+
+        document.querySelectorAll(".editar-btn").forEach((btn) => {
+          btn.addEventListener("click", () => abrirModalEditar(btn.dataset.id));
+        });
+        document.querySelectorAll(".eliminar-btn").forEach((btn) => {
+          btn.addEventListener("click", () => eliminarObra(btn.dataset.id));
+        });
+      }
+
+      btnNuevaObraSocial.addEventListener("click", abrirModalNuevo);
+      btnToggleView.addEventListener("click", () => {
+        gridView = !gridView;
+        renderObras();
+      });
+      window.addEventListener("resize", () => {
+        if (window.innerWidth < 768) gridView = true;
+        renderObras();
+      });
+
+      function abrirModalNuevo() {
+        obraEditando = null;
+        document.getElementById("modalTitle").textContent = "Nueva Obra Social";
+        document.getElementById("obraSocialId").value = "";
+        document.getElementById("nombreObraSocial").value = "";
+        document.getElementById("descuentoObraSocial").value = "";
+        document.getElementById("imagenObraSocial").value = "";
+        new bootstrap.Modal(document.getElementById("modalObraSocial")).show();
+      }
+
+      function abrirModalEditar(id) {
+        obraEditando = id;
+        const o = obras.find((e) => e._id === id);
+        if (!o) return;
+        document.getElementById("modalTitle").textContent =
+          "Editar Obra Social";
+        document.getElementById("obraSocialId").value = o._id;
+        document.getElementById("nombreObraSocial").value = o.name;
+        document.getElementById("descuentoObraSocial").value = o.discount || "";
+        document.getElementById("imagenObraSocial").value = o.image || "";
+        new bootstrap.Modal(document.getElementById("modalObraSocial")).show();
+      }
+
+      async function eliminarObra(id) {
+        if (!confirm("¿Está seguro que desea eliminar esta obra social?"))
+          return;
+        try {
+          const res = await fetch(API_URL, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id }),
+          });
+          if (!res.ok) throw new Error("Error al eliminar");
+          fetchObras();
+        } catch (err) {
+          alert(err.message);
+        }
+      }
+
+      guardarBtn.addEventListener("click", async () => {
+        const id = document.getElementById("obraSocialId").value;
+        const nombre = document.getElementById("nombreObraSocial").value.trim();
+        const descuento =
+          parseFloat(document.getElementById("descuentoObraSocial").value) || 0;
+        const imagen = document.getElementById("imagenObraSocial").value.trim();
+
+        if (!nombre) {
+          alert("El nombre es obligatorio");
+          return;
+        }
+
+        try {
+          const res = await fetch(API_URL, {
+            method: obraEditando ? "PATCH" : "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              _id: id,
+              name: nombre,
+              discount: descuento,
+              image: imagen,
+            }),
+          });
+          if (!res.ok) throw new Error("Error al guardar obra social");
+
+          // Limpiar y cerrar modal
+          obraEditando = null;
+          document.getElementById("obraSocialId").value = "";
+          document.getElementById("nombreObraSocial").value = "";
+          document.getElementById("descuentoObraSocial").value = "";
+          document.getElementById("imagenObraSocial").value = "";
+          bootstrap.Modal.getInstance(
+            document.getElementById("modalObraSocial"),
+          ).hide();
+
+          fetchObras();
+        } catch (err) {
+          alert(err.message);
+        }
+      });
+
+      fetchObras();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,116 @@
+body {
+    background: url(../assets/backgrounds/fondo.jpg);
+    display: flex;
+    flex-direction: column;
+}
+.client-dashboard .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 15px;
+}
+.dashboard-header {
+    background-color: #4397ca !important;
+    color: white;
+    padding: 1.5rem !important;
+}
+
+#logoutBtn {
+    background-color: #4397ca;
+    border: 1px solid white;
+    font-size: 1rem;
+    color: #ffffff;
+}
+#logoutBtn:hover {
+    background-color: white;
+    color: #4397ca;
+}
+
+.card-header {
+    background-color: #4397ca !important;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #574949;
+    margin-bottom: 0.5rem;
+}
+.btn-primary {
+    background-color: #4397ca;
+    border-color: #4397ca;
+    border-radius: 6px;
+    padding: 0.6rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #3a86b5;
+    border-color: #3a86b5;
+}
+
+.nav-pills .nav-link {
+    color: #4397ca;
+    background-color: white;
+    border: 2px solid #4397ca;
+    border-radius: 10px;
+    padding: 0.5rem 1.5rem;
+    margin: 0 0.25rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #4397ca;
+    color: white;
+    border-color: #4397ca;
+}
+
+.nav-pills .nav-link:hover:not(.active) {
+    background-color: #e9f5fe;
+    color: #4397ca;
+}
+footer {
+    flex-shrink: 0;
+    margin-top: auto;
+}
+
+@media (max-width: 768px) {
+    .client-dashboard {
+        padding: 15px 0;
+    }
+    
+    .dashboard-header {
+        padding: 1.25rem !important;
+        text-align: center;
+    }
+    
+    .nav-pills .nav-link {
+        padding: 0.4rem 1rem;
+        font-size: 0.9rem;
+        margin: 0.1rem;
+    }
+    
+    .card-body {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .client-dashboard {
+        padding: 10px 0;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .card-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .client-dashboard .container {
+        padding: 0 10px;
+    }
+}

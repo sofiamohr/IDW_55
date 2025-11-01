@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Especialidades - Cardiología</title>
+    <link rel="stylesheet" href="../../styles/global.css" />
+    <link rel="stylesheet" href="../../styles/cardiologia.css"/>
+    <link rel="icon" href="../../assets/logos/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  </head>
+  <body>
+    <header>
+      <div class="header-content-container" id="headerContentContainer">
+        <div>
+          <a href="../../index.html">
+            <img src="../../assets/logos/logoHeader.png" id="logoHeader" />
+          </a>
+        </div>
+
+        <nav id="mainNavMenu">
+          <ul>
+            <li class="menu-element">
+              <a href="especialidades.html">Especialidades</a>
+            </li>
+            <li class="menu-element">
+              <a href="../contacto/contacto.html">Contacto</a>
+            </li>
+            <li class="menu-element">
+              <a href="../institucional/institucional.html">Institucional</a>
+            </li>
+            <li class="menu-element">
+              <a href="../profesionales_general/profesionales_general.html">Profesionales</a>
+            </li>
+            <li class="menu-element">
+              <a href="../login/login.html">
+              <i class="fas fa-user-md"></i> Iniciar Sesión 
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="burger-button-container">
+          <button id="burgerButton">
+            <svg
+              id="burgerIcon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect y="4" width="24" height="2" fill="#ffffff" rx="1"></rect>
+              <rect y="11" width="24" height="2" fill="#ffffff" rx="1"></rect>
+              <rect y="18" width="24" height="2" fill="#ffffff" rx="1"></rect>
+            </svg>
+            <svg
+              id="closeIcon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              class="hidden"
+            >
+              <line
+                x1="4"
+                y1="4"
+                x2="20"
+                y2="20"
+                stroke="#ffffff"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="20"
+                y1="4"
+                x2="4"
+                y2="20"
+                stroke="#ffffff"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+    
+    <div id="backdrop" class="hidden"></div>
+    
+    <main>
+      <section class="hero">
+        <div class="hero-background-cardiologia"></div>
+        <div class="hero-content glass-black-1px">
+          <h2 class="hero-title"><b>CARDIOLOGÍA</b></h2>
+          <img src="../../assets/logos/logoCompletoSF.png" class="hero-logo" />
+        </div>
+      </section>
+
+      <!-- SERVICIOS -->
+      <section class="servicios">
+        <div class="servicios-texto">
+          <h2>SERVICIOS ESPECÍFICOS</h2>
+          <p class="servicios-descripcion">Cuidado integral de tu salud cardíaca con tecnología de última generación.</p>
+          
+          <!-- SEPARADOR -->
+          <div class="separador"><hr></div>
+          
+          <div class="servicios-grid">
+            <div class="servicio-card">
+              <div class="servicio-imagen">
+                <img src="../../assets/specialties/electrocardiograma.jpg" alt="Electrocardiograma">
+              </div>
+              <h3>Electrocardiograma (ECG)</h3>
+              <p>Registro de la actividad eléctrica del corazón para detectar alteraciones.</p>
+            </div>
+            
+            <div class="servicio-card">
+              <div class="servicio-imagen">
+                <img src="../../assets/specialties/pruebaEsfuerzo.jpg" alt="Prueba de Esfuerzo">
+              </div>
+              <h3>Prueba de Esfuerzo</h3>
+              <p>Evaluación del rendimiento cardíaco durante la actividad física controlada.</p>
+            </div>
+            
+            <div class="servicio-card">
+              <div class="servicio-imagen">
+                <img src="../../assets/specialties/consultaCardiologia.jpg" alt="Consulta Cardiológica">
+              </div>
+              <h3>Consulta Cardiológica</h3>
+              <p>Evaluación completa del corazón y sistema circulatorio para diagnóstico y prevención.</p>
+            </div>
+            
+            <div class="servicio-card">
+              <div class="servicio-imagen">
+                <img src="../../assets/specialties/holter.jpg" alt="Holter de Ritmo y Presión">
+              </div>
+              <h3>Holter de Ritmo y Presión</h3>
+              <p>Monitoreo continuo de la actividad cardíaca o presión arterial durante 24 horas.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Equipo -->
+      <section class="equipo">
+        <div class="container">
+          <h2>EQUIPO MÉDICO</h2>
+          <p class="equipo-descripcion">Nuestro equipo de especialistas altamente calificados está comprometido con tu salud cardíaca.</p>
+          
+          <div class="equipo-grid">
+            <div class="doctor-card">
+              <div class="doctor-imagen">
+                <img src="../../assets/medicos/Dr. Horacio Barreto.jpg" alt="Dr. Horacio Barreto" class="doctor-foto">
+              </div>
+              <h3>Dr. Horacio Barreto</h3>
+              <p class="doctor-especialidad">Cardiología Clínica e Insuficiencia Cardíaca</p>
+              <p>Especialista en el manejo integral de la insuficiencia cardíaca y las cardiopatías estructurales.
+                Más de 15 años de experiencia en el diagnóstico y tratamiento de enfermedades cardiovasculares complejas.</p>
+            </div>
+            
+            <div class="doctor-card">
+              <div class="doctor-imagen">
+                <img src="../../assets/medicos/Dr. Martin Ledesme.jpg" alt="Dr. Martin Ledesme" class="doctor-foto">
+              </div>
+              <h3>Dr. Martin Ledesme</h3>
+              <p class="doctor-especialidad">Cardiología Intervencionista y Hemodinamia</p>
+              <p>Especialista en angioplastias, stents coronarios y procedimientos diagnósticos invasivos. 
+                 Formado en los principales centros de intervencionismo cardíaco del país.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-logo-container">
+          <img src="../../assets/logos/logoCompletoSF.png">
+        </div>
+        <div class="footer-links">
+          <div>
+            <h3>Nuestras Especialidades</h3>
+            <nav>
+              <ul>
+                <li><a href="oftalmologia.html">Oftalmología</a></li>
+                <li><a href="cardiologia.html">Cardiología</a></li>
+                <li><a href="odontologia.html">Odontología</a></li>
+                <li><a href="traumatologia.html">Traumatología</a></li>
+                <li><a href="neurologia.html">Neurología</a></li>
+                <li><a href="ginecologia.html">Ginecología y Obstetricia</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div>
+            <h3>Servicios Adicionales</h3>
+            <nav>
+              <ul>
+                <li><a href="#">Laboratorio</a></li>
+                <li><a href="#">Medicina Deportiva</a></li>
+                <li><a href="#">Telemedicina</a></li>
+                <li><a href="#">Rehabilitación Online</a></li>
+                <li><a href="#">Cirugia Robotica</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div>
+            <h3>Contacto</h3>
+            <nav>
+              <ul>
+                <li><p>Dirección: Av. Mendoza 2301, Rio Gallegos - Santa Cruz</p></li>
+                <li><p>Horarios: Lunes a Sábados 08:00 a 20:00</p></li>
+                <li><p>Whatsapp: 2978451223</p></li>
+                <li><p>Correo Electronico: Medicalidw@gmail.com</p></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>© MedicalIDW - Clínica Médica</p>
+        <p>Introducción al Desarrollo Web - 2025</p>
+      </div>
+    </footer>
+    
+    <script src="../../scripts/burgerMenu.js"></script>
+  </body>
+</html>
