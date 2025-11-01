@@ -143,7 +143,7 @@
       aria-labelledby="modalTitle"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <div class="modal-header bg-primary text-white">
             <h5 id="modalTitle" class="modal-title">Nuevo Médico</h5>
@@ -177,10 +177,20 @@
                 <input id="dni" type="number" class="form-control" />
               </div>
               <div class="col-md-6">
-                <label for="especialidad" class="form-label"
-                  >Especialidad</label
-                >
+                <label for="especialidad" class="form-label">Descripción</label>
                 <input id="especialidad" type="text" class="form-control" />
+              </div>
+
+              <!-- Especialidades -->
+              <div class="col-md-6">
+                <label class="form-label">Especialidades</label>
+                <div id="especialidadesContainer"></div>
+              </div>
+
+              <!-- Obras Sociales -->
+              <div class="col-md-6">
+                <label class="form-label">Obras Sociales</label>
+                <div id="obrasSocialesContainer"></div>
               </div>
             </div>
           </div>
@@ -206,6 +216,9 @@
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
         const API_URL = "http://localhost:3000/api/doctors";
+        const API_ESPECIALIDADES = "http://localhost:3000/api/specialties";
+        const API_OBRAS = "http://localhost:3000/api/healthinsurances";
+
         const tablaBody = document.getElementById("tablaMedicos");
         const cardContainer = document.getElementById("cardContainer");
         const modal = new bootstrap.Modal(
@@ -220,12 +233,68 @@
 
         let doctores = [];
         let doctorEditando = null;
-        let vista = "tabla"; // por defecto
+        let vista = "tabla";
+
+        let especialidadesDisponibles = [];
+        let obrasSocialesDisponibles = [];
+
+        // Cargar opciones de checkboxes
+        async function fetchEspecialidades() {
+          try {
+            const res = await fetch(API_ESPECIALIDADES);
+            especialidadesDisponibles = await res.json();
+            console.log(especialidadesDisponibles);
+          } catch (e) {
+            especialidadesDisponibles = [];
+            console.error("Error al cargar especialidades");
+          }
+        }
+
+        async function fetchObras() {
+          try {
+            const res = await fetch(API_OBRAS);
+            obrasSocialesDisponibles = await res.json();
+            console.log(obrasSocialesDisponibles);
+          } catch (e) {
+            obrasSocialesDisponibles = [];
+            console.error("Error al cargar obras sociales");
+          }
+        }
+
+        function renderCheckboxes() {
+          const espContainer = document.getElementById(
+            "especialidadesContainer",
+          );
+          const osContainer = document.getElementById("obrasSocialesContainer");
+
+          espContainer.innerHTML = especialidadesDisponibles
+            .map(
+              (e) => `<div class="form-check">
+              <input class="form-check-input" type="checkbox" value="${e._id}" id="esp_${e._id}">
+              <label class="form-check-label" for="esp_${e._id}">${e.name}</label>
+            </div>`,
+            )
+            .join("");
+
+          osContainer.innerHTML = obrasSocialesDisponibles
+            .map(
+              (o) => `<div class="form-check">
+              <input class="form-check-input" type="checkbox" value="${o._id}" id="os_${o._id}">
+              <label class="form-check-label" for="os_${o._id}">${o.name}</label>
+            </div>`,
+            )
+            .join("");
+        }
 
         async function fetchDoctores() {
-          const res = await fetch(API_URL);
-          doctores = await res.json();
-          renderDoctores();
+          try {
+            const res = await fetch(API_URL);
+            doctores = await res.json();
+            renderDoctores();
+          } catch (e) {
+            tablaBody.innerHTML =
+              '<tr><td colspan="7" class="text-center text-danger py-4">Error al cargar los médicos</td></tr>';
+          }
         }
 
         function renderDoctores(filtro = "") {
@@ -236,9 +305,7 @@
               String(d.licenseNumber).includes(filtro),
           );
 
-          if (window.innerWidth < 768) {
-            vista = "tarjetas";
-          }
+          if (window.innerWidth < 768) vista = "tarjetas";
 
           if (vista === "tabla") {
             renderTable(filtrados);
@@ -249,27 +316,28 @@
             tablaContainer.classList.add("d-none");
             cardContainer.classList.remove("d-none");
           }
+
+          bindActionButtons();
         }
 
         function renderTable(lista) {
           tablaBody.innerHTML = lista.length
             ? lista
                 .map(
-                  (d) => `
-              <tr data-id="${d._id}">
-                <td>${d.lastName}</td>
-                <td>${d.firstName}</td>
-                <td>${d.licenseNumber}</td>
-                <td>${d.phone || "-"}</td>
-                <td>${d.description || "-"}</td>
-                <td>${d.consultationFee || "-"}</td>
-                <td class="text-center">
-                  <div class="btn-group btn-group-sm">
-                    <button class="btn btn-outline-primary editar-btn"><i class="bi bi-pencil"></i></button>
-                    <button class="btn btn-outline-danger eliminar-btn"><i class="bi bi-trash"></i></button>
-                  </div>
-                </td>
-              </tr>`,
+                  (d) => `<tr data-id="${d._id}">
+                    <td>${d.lastName}</td>
+                    <td>${d.firstName}</td>
+                    <td>${d.licenseNumber}</td>
+                    <td>${d.phone || "-"}</td>
+                    <td>${d.specialty ? d.specialty.map((s) => s.name).join(", ") : "-"}</td>
+                    <td>${d.consultationFee || "-"}</td>
+                    <td class="text-center">
+                      <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary editar-btn" data-id="${d._id}"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-outline-danger eliminar-btn" data-id="${d._id}"><i class="bi bi-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>`,
                 )
                 .join("")
             : `<tr><td colspan="7" class="text-center text-muted py-4">No se encontraron médicos</td></tr>`;
@@ -279,50 +347,163 @@
           cardContainer.innerHTML = lista.length
             ? lista
                 .map(
-                  (d) => `
-            <div class="col">
-              <div class="card h-100 shadow-sm">
-                <img src="${
-                  d.image
-                    ? `data:image/jpeg;base64,${d.image}`
-                    : "https://via.placeholder.com/400x200?text=Médico"
-                }" class="card-img-top" alt="doctor">
-                <div class="card-body">
-                  <h5 class="card-title">${d.firstName} ${d.lastName}</h5>
-                  <p class="card-text mb-1 text-muted">${
-                    d.description || "Sin descripción"
-                  }</p>
-                  <p class="card-text small"><i class="bi bi-telephone"></i> ${
-                    d.phone || "-"
-                  }</p>
-                  <p class="fw-bold mb-2">Honorario: $${d.consultationFee}</p>
-                  <div class="d-flex justify-content-end gap-2">
-                    <button class="btn btn-sm btn-outline-primary editar-btn" data-id="${
-                      d._id
-                    }"><i class="bi bi-pencil"></i></button>
-                    <button class="btn btn-sm btn-outline-danger eliminar-btn" data-id="${
-                      d._id
-                    }"><i class="bi bi-trash"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>`,
+                  (d) => `<div class="col">
+                      <div class="card h-100 shadow-sm">
+                        <img src="${d.image ? `data:image/jpeg;base64,${d.image}` : "https://via.placeholder.com/400x200?text=Médico"}" class="card-img-top" alt="doctor">
+                        <div class="card-body">
+                          <h5 class="card-title">${d.firstName} ${d.lastName}</h5>
+                          <p class="card-text mb-1 text-muted">${d.description || "Sin descripción"}</p>
+                          <p class="card-text small"><i class="bi bi-telephone"></i> ${d.phone || "-"}</p>
+                          <p class="card-text small">Especialidades: ${d.specialty ? d.specialty.map((s) => s.name).join(", ") : "-"}</p>
+                          <p class="card-text small">Obras sociales: ${d.healthInsurances ? d.healthInsurances.map((o) => o.name).join(", ") : "-"}</p>
+                          <p class="fw-bold mb-2">Honorario: $${d.consultationFee}</p>
+                          <div class="d-flex justify-content-end gap-2">
+                            <button class="btn btn-sm btn-outline-primary editar-btn" data-id="${d._id}"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-sm btn-outline-danger eliminar-btn" data-id="${d._id}"><i class="bi bi-trash"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>`,
                 )
                 .join("")
             : `<div class="text-center text-muted py-4">No se encontraron médicos</div>`;
         }
 
+        function bindActionButtons() {
+          document.querySelectorAll(".editar-btn").forEach((btn) =>
+            btn.addEventListener("click", (e) => {
+              const id = e.currentTarget.dataset.id;
+              const doctor = doctores.find((d) => d._id === id);
+              abrirModalEditar(doctor);
+            }),
+          );
+
+          document.querySelectorAll(".eliminar-btn").forEach((btn) =>
+            btn.addEventListener("click", async (e) => {
+              const id = e.currentTarget.dataset.id;
+              if (confirm("¿Está seguro que desea eliminar este médico?")) {
+                await fetch(API_URL, {
+                  method: "DELETE",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ id }),
+                });
+                await fetchDoctores();
+              }
+            }),
+          );
+        }
+
+        function abrirModalNuevo() {
+          doctorEditando = null;
+          document.getElementById("modalTitle").textContent = "Nuevo Médico";
+          [
+            "apellidos",
+            "nombres",
+            "dni",
+            "telefono",
+            "especialidad",
+            "matricula",
+          ].forEach((id) => (document.getElementById(id).value = ""));
+          // desmarcar checkboxes
+          document
+            .querySelectorAll(
+              "#especialidadesContainer input, #obrasSocialesContainer input",
+            )
+            .forEach((c) => (c.checked = false));
+          modal.show();
+        }
+
+        function abrirModalEditar(doctor) {
+          doctorEditando = doctor;
+          document.getElementById("modalTitle").textContent = "Editar Médico";
+          document.getElementById("apellidos").value = doctor.lastName || "";
+          document.getElementById("nombres").value = doctor.firstName || "";
+          document.getElementById("dni").value = doctor.consultationFee || "";
+          document.getElementById("telefono").value = doctor.phone || "";
+          document.getElementById("especialidad").value =
+            doctor.description || "";
+          document.getElementById("matricula").value =
+            doctor.licenseNumber || "";
+
+          // Marcar checkboxes según los datos del médico
+          document
+            .querySelectorAll("#especialidadesContainer input")
+            .forEach((c) => {
+              c.checked =
+                doctor.specialty?.some((s) => s._id === c.value) || false;
+            });
+          document
+            .querySelectorAll("#obrasSocialesContainer input")
+            .forEach((c) => {
+              c.checked =
+                doctor.healthInsurances?.some((o) => o._id === c.value) ||
+                false;
+            });
+
+          modal.show();
+        }
+
+        btnNuevo.addEventListener("click", abrirModalNuevo);
+
+        guardarBtn.addEventListener("click", async () => {
+          const seleccionadoEspecialidades = Array.from(
+            document.querySelectorAll("#especialidadesContainer input:checked"),
+          ).map((c) => c.value);
+          const seleccionadoObras = Array.from(
+            document.querySelectorAll("#obrasSocialesContainer input:checked"),
+          ).map((c) => c.value);
+
+          const nuevo = {
+            firstName: document.getElementById("nombres").value.trim(),
+            lastName: document.getElementById("apellidos").value.trim(),
+            licenseNumber: Number(
+              document.getElementById("matricula").value.trim(),
+            ),
+            phone: document.getElementById("telefono").value.trim(),
+            description: document.getElementById("especialidad").value.trim(),
+            consultationFee:
+              Number(document.getElementById("dni").value.trim()) || 0,
+            specialty: seleccionadoEspecialidades,
+            healthInsurances: seleccionadoObras,
+          };
+
+          if (
+            !nuevo.firstName ||
+            !nuevo.lastName ||
+            !nuevo.licenseNumber ||
+            !nuevo.consultationFee
+          ) {
+            alert("Complete todos los campos obligatorios");
+            return;
+          }
+
+          if (doctorEditando) {
+            await fetch(API_URL, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id: doctorEditando._id, ...nuevo }),
+            });
+          } else {
+            await fetch(API_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(nuevo),
+            });
+          }
+
+          modal.hide();
+          await fetchDoctores();
+        });
+
         searchInput.addEventListener("input", (e) =>
           renderDoctores(e.target.value),
         );
-
         btnVistaTabla.addEventListener("click", () => {
           vista = "tabla";
           btnVistaTabla.classList.add("active");
           btnVistaTarjetas.classList.remove("active");
           renderDoctores(searchInput.value);
         });
-
         btnVistaTarjetas.addEventListener("click", () => {
           vista = "tarjetas";
           btnVistaTarjetas.classList.add("active");
@@ -334,11 +515,14 @@
           renderDoctores(searchInput.value),
         );
 
+        // Inicializar
+        await fetchEspecialidades();
+        await fetchObras();
+        renderCheckboxes();
         await fetchDoctores();
       });
     </script>
 
-    <!-- Enlace activo en navbar -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const currentPage = window.location.pathname.split("/").pop();
