@@ -67,5 +67,5 @@ endpoints.forEach((ep) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🟢 Proxy API corriendo en http://localhost:${PORT}`);
+  console.log(`📡 Proxy API corriendo en http://localhost:${PORT}`);
 });
