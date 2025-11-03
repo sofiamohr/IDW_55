@@ -18,6 +18,17 @@
       .primary-bg {
         background-color: #4397ca;
       }
+      .nav-link.active {
+        font-weight: 600;
+        text-decoration: underline;
+        color: #fff !important;
+      }
+      #imagePreview {
+        max-height: 200px;
+        width: auto;
+        display: block;
+        margin-top: 10px;
+      }
     </style>
   </head>
 
@@ -83,10 +94,10 @@
               id="searchInput"
               type="text"
               class="form-control"
-              placeholder="Buscar por nombre, apellido o matrícula..."
+              placeholder="Buscar por nombre, apellido, email o matrícula..."
             />
 
-            <!-- Botones de vista (solo visible en pantallas md o mayores) -->
+            <!-- Botones de vista -->
             <div
               class="btn-group d-none d-md-flex"
               role="group"
@@ -108,6 +119,7 @@
                 <tr>
                   <th>Apellido</th>
                   <th>Nombre</th>
+                  <th>Email</th>
                   <th>Matrícula</th>
                   <th>Teléfono</th>
                   <th>Especialidad</th>
@@ -117,7 +129,7 @@
               </thead>
               <tbody id="tablaMedicos">
                 <tr>
-                  <td colspan="7" class="text-center text-muted py-4">
+                  <td colspan="8" class="text-center text-muted py-4">
                     Cargando médicos...
                   </td>
                 </tr>
@@ -169,6 +181,10 @@
                 <input id="nombres" type="text" class="form-control" />
               </div>
               <div class="col-md-6">
+                <label for="email" class="form-label">Email *</label>
+                <input id="email" type="email" class="form-control" />
+              </div>
+              <div class="col-md-6">
                 <label for="matricula" class="form-label">Matrícula *</label>
                 <input id="matricula" type="number" class="form-control" />
               </div>
@@ -183,6 +199,16 @@
               <div class="col-md-6">
                 <label for="especialidad" class="form-label">Descripción</label>
                 <input id="especialidad" type="text" class="form-control" />
+              </div>
+              <div class="col-md-6">
+                <label for="image" class="form-label">Foto (URL)</label>
+                <input
+                  id="image"
+                  type="text"
+                  class="form-control"
+                  placeholder="https://..."
+                />
+                <img id="imagePreview" src="" alt="Vista previa" />
               </div>
 
               <!-- Especialidades -->
@@ -234,70 +260,65 @@
         const btnVistaTabla = document.getElementById("btnVistaTabla");
         const btnVistaTarjetas = document.getElementById("btnVistaTarjetas");
         const tablaContainer = document.getElementById("tablaContainer");
+        const imageInput = document.getElementById("image");
+        const imagePreview = document.getElementById("imagePreview");
 
         let doctores = [];
         let doctorEditando = null;
         let vista = "tabla";
-
         let especialidadesDisponibles = [];
         let obrasSocialesDisponibles = [];
 
-        // Cargar opciones de checkboxes
+        imageInput.addEventListener("input", () => {
+          imagePreview.src =
+            imageInput.value ||
+            "https://via.placeholder.com/400x200?text=Médico";
+        });
+
         async function fetchEspecialidades() {
           try {
-            const res = await fetch(API_ESPECIALIDADES);
-            especialidadesDisponibles = await res.json();
-            console.log(especialidadesDisponibles);
-          } catch (e) {
+            especialidadesDisponibles = await (
+              await fetch(API_ESPECIALIDADES)
+            ).json();
+          } catch {
             especialidadesDisponibles = [];
-            console.error("Error al cargar especialidades");
           }
         }
-
         async function fetchObras() {
           try {
-            const res = await fetch(API_OBRAS);
-            obrasSocialesDisponibles = await res.json();
-            console.log(obrasSocialesDisponibles);
-          } catch (e) {
+            obrasSocialesDisponibles = await (await fetch(API_OBRAS)).json();
+          } catch {
             obrasSocialesDisponibles = [];
-            console.error("Error al cargar obras sociales");
           }
         }
-
         function renderCheckboxes() {
-          const espContainer = document.getElementById(
-            "especialidadesContainer",
-          );
-          const osContainer = document.getElementById("obrasSocialesContainer");
-
-          espContainer.innerHTML = especialidadesDisponibles
-            .map(
-              (e) => `<div class="form-check">
+          document.getElementById("especialidadesContainer").innerHTML =
+            especialidadesDisponibles
+              .map(
+                (e) => `<div class="form-check">
               <input class="form-check-input" type="checkbox" value="${e._id}" id="esp_${e._id}">
               <label class="form-check-label" for="esp_${e._id}">${e.name}</label>
             </div>`,
-            )
-            .join("");
-
-          osContainer.innerHTML = obrasSocialesDisponibles
-            .map(
-              (o) => `<div class="form-check">
+              )
+              .join("");
+          document.getElementById("obrasSocialesContainer").innerHTML =
+            obrasSocialesDisponibles
+              .map(
+                (o) => `<div class="form-check">
               <input class="form-check-input" type="checkbox" value="${o._id}" id="os_${o._id}">
               <label class="form-check-label" for="os_${o._id}">${o.name}</label>
             </div>`,
-            )
-            .join("");
+              )
+              .join("");
         }
 
         async function fetchDoctores() {
           try {
-            const res = await fetch(API_URL);
-            doctores = await res.json();
+            doctores = await (await fetch(API_URL)).json();
             renderDoctores();
-          } catch (e) {
+          } catch {
             tablaBody.innerHTML =
-              '<tr><td colspan="7" class="text-center text-danger py-4">Error al cargar los médicos</td></tr>';
+              '<tr><td colspan="8" class="text-center text-danger py-4">Error al cargar los médicos</td></tr>';
           }
         }
 
@@ -306,9 +327,9 @@
             (d) =>
               d.firstName.toLowerCase().includes(filtro.toLowerCase()) ||
               d.lastName.toLowerCase().includes(filtro.toLowerCase()) ||
+              d.email.toLowerCase().includes(filtro.toLowerCase()) ||
               String(d.licenseNumber).includes(filtro),
           );
-
           if (window.innerWidth < 768) vista = "tarjetas";
 
           if (vista === "tabla") {
@@ -320,7 +341,6 @@
             tablaContainer.classList.add("d-none");
             cardContainer.classList.remove("d-none");
           }
-
           bindActionButtons();
         }
 
@@ -329,22 +349,23 @@
             ? lista
                 .map(
                   (d) => `<tr data-id="${d._id}">
-                    <td>${d.lastName}</td>
-                    <td>${d.firstName}</td>
-                    <td>${d.licenseNumber}</td>
-                    <td>${d.phone || "-"}</td>
-                    <td>${d.specialty ? d.specialty.map((s) => s.name).join(", ") : "-"}</td>
-                    <td>${d.consultationFee || "-"}</td>
-                    <td class="text-center">
-                      <div class="btn-group btn-group-sm">
-                        <button class="btn btn-outline-primary editar-btn" data-id="${d._id}"><i class="bi bi-pencil"></i></button>
-                        <button class="btn btn-outline-danger eliminar-btn" data-id="${d._id}"><i class="bi bi-trash"></i></button>
-                      </div>
-                    </td>
-                  </tr>`,
+                <td>${d.lastName}</td>
+                <td>${d.firstName}</td>
+                <td>${d.email || "-"}</td>
+                <td>${d.licenseNumber}</td>
+                <td>${d.phone || "-"}</td>
+                <td>${d.specialty ? d.specialty.map((s) => s.name).join(", ") : "-"}</td>
+                <td>${d.consultationFee || "-"}</td>
+                <td class="text-center">
+                  <div class="btn-group btn-group-sm">
+                    <button class="btn btn-outline-primary editar-btn" data-id="${d._id}"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-outline-danger eliminar-btn" data-id="${d._id}"><i class="bi bi-trash"></i></button>
+                  </div>
+                </td>
+              </tr>`,
                 )
                 .join("")
-            : `<tr><td colspan="7" class="text-center text-muted py-4">No se encontraron médicos</td></tr>`;
+            : `<tr><td colspan="8" class="text-center text-muted py-4">No se encontraron médicos</td></tr>`;
         }
 
         function renderCards(lista) {
@@ -352,22 +373,23 @@
             ? lista
                 .map(
                   (d) => `<div class="col">
-                      <div class="card h-100 shadow-sm">
-                        <img src="${d.image ? `data:image/jpeg;base64,${d.image}` : "https://via.placeholder.com/400x200?text=Médico"}" class="card-img-top" alt="doctor">
-                        <div class="card-body">
-                          <h5 class="card-title">${d.firstName} ${d.lastName}</h5>
-                          <p class="card-text mb-1 text-muted">${d.description || "Sin descripción"}</p>
-                          <p class="card-text small"><i class="bi bi-telephone"></i> ${d.phone || "-"}</p>
-                          <p class="card-text small">Especialidades: ${d.specialty ? d.specialty.map((s) => s.name).join(", ") : "-"}</p>
-                          <p class="card-text small">Obras sociales: ${d.healthInsurances ? d.healthInsurances.map((o) => o.name).join(", ") : "-"}</p>
-                          <p class="fw-bold mb-2">Honorario: $${d.consultationFee}</p>
-                          <div class="d-flex justify-content-end gap-2">
-                            <button class="btn btn-sm btn-outline-primary editar-btn" data-id="${d._id}"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-sm btn-outline-danger eliminar-btn" data-id="${d._id}"><i class="bi bi-trash"></i></button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>`,
+              <div class="card h-100 shadow-sm">
+                <img src="${d.image || "https://via.placeholder.com/400x200?text=Médico"}" class="card-img-top" alt="doctor">
+                <div class="card-body">
+                  <h5 class="card-title">${d.firstName} ${d.lastName}</h5>
+                  <p class="card-text mb-1 text-muted">${d.description || "Sin descripción"}</p>
+                  <p class="card-text small"><i class="bi bi-envelope"></i> ${d.email || "-"}</p>
+                  <p class="card-text small"><i class="bi bi-telephone"></i> ${d.phone || "-"}</p>
+                  <p class="card-text small">Especialidades: ${d.specialty ? d.specialty.map((s) => s.name).join(", ") : "-"}</p>
+                  <p class="card-text small">Obras sociales: ${d.healthInsurances ? d.healthInsurances.map((o) => o.name).join(", ") : "-"}</p>
+                  <p class="fw-bold mb-2">Honorario: $${d.consultationFee}</p>
+                  <div class="d-flex justify-content-end gap-2">
+                    <button class="btn btn-sm btn-outline-primary editar-btn" data-id="${d._id}"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger eliminar-btn" data-id="${d._id}"><i class="bi bi-trash"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>`,
                 )
                 .join("")
             : `<div class="text-center text-muted py-4">No se encontraron médicos</div>`;
@@ -381,7 +403,6 @@
               abrirModalEditar(doctor);
             }),
           );
-
           document.querySelectorAll(".eliminar-btn").forEach((btn) =>
             btn.addEventListener("click", async (e) => {
               const id = e.currentTarget.dataset.id;
@@ -403,12 +424,14 @@
           [
             "apellidos",
             "nombres",
+            "email",
             "dni",
             "telefono",
             "especialidad",
             "matricula",
+            "image",
           ].forEach((id) => (document.getElementById(id).value = ""));
-          // desmarcar checkboxes
+          imagePreview.src = "https://via.placeholder.com/400x200?text=Médico";
           document
             .querySelectorAll(
               "#especialidadesContainer input, #obrasSocialesContainer input",
@@ -422,14 +445,17 @@
           document.getElementById("modalTitle").textContent = "Editar Médico";
           document.getElementById("apellidos").value = doctor.lastName || "";
           document.getElementById("nombres").value = doctor.firstName || "";
+          document.getElementById("email").value = doctor.email || "";
           document.getElementById("dni").value = doctor.consultationFee || "";
           document.getElementById("telefono").value = doctor.phone || "";
           document.getElementById("especialidad").value =
             doctor.description || "";
           document.getElementById("matricula").value =
             doctor.licenseNumber || "";
+          document.getElementById("image").value = doctor.image || "";
+          imagePreview.src =
+            doctor.image || "https://via.placeholder.com/400x200?text=Médico";
 
-          // Marcar checkboxes según los datos del médico
           document
             .querySelectorAll("#especialidadesContainer input")
             .forEach((c) => {
@@ -443,7 +469,6 @@
                 doctor.healthInsurances?.some((o) => o._id === c.value) ||
                 false;
             });
-
           modal.show();
         }
 
@@ -460,6 +485,7 @@
           const nuevo = {
             firstName: document.getElementById("nombres").value.trim(),
             lastName: document.getElementById("apellidos").value.trim(),
+            email: document.getElementById("email").value.trim(),
             licenseNumber: Number(
               document.getElementById("matricula").value.trim(),
             ),
@@ -467,6 +493,7 @@
             description: document.getElementById("especialidad").value.trim(),
             consultationFee:
               Number(document.getElementById("dni").value.trim()) || 0,
+            image: document.getElementById("image").value.trim(),
             specialty: seleccionadoEspecialidades,
             healthInsurances: seleccionadoObras,
           };
@@ -475,7 +502,8 @@
             !nuevo.firstName ||
             !nuevo.lastName ||
             !nuevo.licenseNumber ||
-            !nuevo.consultationFee
+            !nuevo.consultationFee ||
+            !nuevo.email
           ) {
             alert("Complete todos los campos obligatorios");
             return;
@@ -514,20 +542,16 @@
           btnVistaTabla.classList.remove("active");
           renderDoctores(searchInput.value);
         });
-
         window.addEventListener("resize", () =>
           renderDoctores(searchInput.value),
         );
 
-        // Inicializar
         await fetchEspecialidades();
         await fetchObras();
         renderCheckboxes();
         await fetchDoctores();
       });
-    </script>
 
-    <script>
       document.addEventListener("DOMContentLoaded", () => {
         const currentPage = window.location.pathname.split("/").pop();
         document.querySelectorAll(".navbar-nav .nav-link").forEach((link) => {
@@ -538,13 +562,5 @@
         });
       });
     </script>
-
-    <style>
-      .nav-link.active {
-        font-weight: 600;
-        text-decoration: underline;
-        color: #fff !important;
-      }
-    </style>
   </body>
 </html>
